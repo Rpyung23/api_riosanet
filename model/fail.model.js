@@ -20,7 +20,7 @@ class FailModel
         try {
             var conn = await connDB().promise()
             var sql = "select F.id,F.cedula,F.tarea,F.notas nota_fallo,F.id_tec," +
-                "UT.nombre nombre_tecnico,U.nombre,U.direccion,U.lat_usuario," +
+                "UT.nombre nombre_tecnico,U.movil,U.nombre,U.direccion,U.lat_usuario," +
                 "U.lng_usuario from fallos as F left join users as UT on UT.id = F.id_tec " +
                 "left join usuarios as U on U.cedula = F.cedula where F.estado = 1"
             var data = await conn.query(sql)
