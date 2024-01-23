@@ -1,0 +1,3 @@
+const JWT_PASS_SECRET = "RIOS@NET%2024"
+
+module.exports = JWT_PASS_SECRET
