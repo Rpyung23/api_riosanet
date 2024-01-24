@@ -32,6 +32,23 @@ class FailModel
         }
     }
 
+    static async readFailAllClientModel(cedula)
+    {
+        try {
+            var conn = await connDB().promise()
+            var sql = "select F.id,F.cedula,F.tarea,F.notas nota_fallo," +
+                "F.id_tec,UT.nombre nombre_tecnico,U.nombre,U.direccion,U.movil," +
+                "U.lat_usuario,U.lng_usuario,F.estado from fallos as F left join users as UT on UT.id = F.id_tec " +
+                "left join usuarios as U on U.cedula = F.cedula where F.cedula = '"+cedula+"'"
+            var data = await conn.query(sql)
+            await conn.end()
+            return data[0]
+        }catch (e) {
+            console.log(e)
+            return []
+        }
+    }
+
     /*static async insertFailClientModel(cel,cedula,notas)
     {
         var conn = await connDB().promise()

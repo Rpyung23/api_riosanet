@@ -8,6 +8,10 @@ class FailController
     static async readFailAllController(){
         return await FailModel.readFailAllModel()
     }
+
+    static async readFailAllClientController(cedula){
+        return await FailModel.readFailAllClientModel(cedula)
+    }
 }
 
 module.exports = FailController
