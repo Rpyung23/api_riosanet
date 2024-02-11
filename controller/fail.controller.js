@@ -12,6 +12,15 @@ class FailController
     static async readFailAllClientController(cedula){
         return await FailModel.readFailAllClientModel(cedula)
     }
+
+    static async insertFailClientController(cedula,tarea,notas){
+        return await FailModel.insertFailClientModel(cedula,tarea,notas)
+    }
+
+    static async deleteFailClientController(id_fail)
+    {
+        return await FailModel.deleteFailClientModel(id_fail)
+    }
 }
 
 module.exports = FailController

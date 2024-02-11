@@ -49,14 +49,33 @@ class FailModel
         }
     }
 
-    /*static async insertFailClientModel(cel,cedula,notas)
-    {
-        var conn = await connDB().promise()
-        var sql = "insert into fallos(agencia, name, dir, estado, ciudad, " +
-            "tarea, cel, ref, fecha, id_tec, cedula,fecha_hora, fecha_com," +
-            "fecha_hora_com, notas) VALUES (0,'','',1,'GUARANDA','INTERNET INTERMITENTE','',''," +
-            "date(now()),46,'',now(),date(now()),now(),'');"
-    }*/
+   static async insertFailClientModel(cedula,tarea,notas)
+   {
+       try {
+           var conn = connDB().promise()
+           var sql = "insert into fallos(agencia, name, dir, estado, ciudad, tarea, cel, ref, " +
+               "fecha, id_tec, cedula,fecha_hora, fecha_com, fecha_hora_com, notas) VALUES " +
+               "(0,'','',1,'GUARANDA','"+tarea+"','','',date(now()),46,'"+cedula+"',now(),'0000-00-00','0000-00-00 00:00:00','"+notas+"')"
+           await conn.query(sql)
+           await conn.end()
+           return {code:200,msm:'FALLO CREADO CON EXITO'}
+       }catch (e) {
+           return {code:400,msm:e.toString()}
+       }
+   }
+
+
+   static async deleteFailClientModel(id_fail)
+   {
+       try {
+           var conn = await connDB().promise()
+           await conn.query("delete from fallos where id = "+id_fail)
+           await conn.end()
+           return {code:200,msm:'FALLO ELIMINADO CON EXITO'}
+       }catch (e) {
+           return {code:400,msm:e.toString()}
+       }
+   }
 }
 
 module.exports = FailModel

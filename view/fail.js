@@ -57,4 +57,40 @@ app.get("/fail_all_client",CheckToken,async function(req,res)
     }
 })
 
+
+app.post("/create_fail",CheckToken,async function(req,res)
+{
+    try {
+        var data = await FailController.insertFailClientController(req.body.cedula,
+            req.body.tarea,req.body.notas)
+
+        res.status(200).json({
+            status_code : data.code,
+            msm : data.msm
+        })
+    }catch (e) {
+        res.status(200).json({
+            status_code : 400,
+            msm : e.toString()
+        })
+    }
+})
+
+app.delete("/delete_fail",CheckToken,async function(req,res)
+{
+    try {
+        var data = await FailController.deleteFailClientController(req.body.id_fail)
+
+        res.status(200).json({
+            status_code : data.code,
+            msm : data.msm
+        })
+    }catch (e) {
+        res.status(200).json({
+            status_code : 400,
+            msm : e.toString()
+        })
+    }
+})
+
 module.exports = app
