@@ -39,7 +39,7 @@ class FailModel
             var sql = "select F.id,F.cedula,F.tarea,F.notas nota_fallo," +
                 "F.id_tec,UT.nombre nombre_tecnico,U.nombre,U.direccion,U.movil," +
                 "U.lat_usuario,U.lng_usuario,F.estado from fallos as F left join users as UT on UT.id = F.id_tec " +
-                "left join usuarios as U on U.cedula = F.cedula where F.cedula = '"+cedula+"'"
+                "left join usuarios as U on U.cedula = F.cedula where F.cedula = '"+cedula+"' order by fecha_hora desc"
             var data = await conn.query(sql)
             await conn.end()
             return data[0]
