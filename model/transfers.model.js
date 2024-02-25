@@ -84,7 +84,7 @@ class TransfersModel
     static async updateEstadoTransfersModel(estado,id){
         try {
             var conn = await connDB().promise()
-            var sql = "update traspasos set estado = "+estado+" where id = "+id
+            var sql = `update traspasos set estado = ${estado} where id = ${id}`
             console.log(sql)
             await conn.query(sql)
             await conn.end()
