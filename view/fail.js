@@ -98,7 +98,7 @@ app.delete("/delete_fail",CheckToken,async function(req,res)
 app.put("/update_estado_fail",CheckToken,async function(req,res)
 {
     try {
-        var data = await FailController.updateEstadoFailController(req.body.estado,req.body.id)
+        var data = await FailController.updateEstadoFailController(req.body.estado,req.body._id)
 
         res.status(200).json({
             status_code : data.code,
