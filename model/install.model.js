@@ -17,6 +17,21 @@ class InstallModel
             return []
         }
     }
+
+
+    static async updateEstadoInstallModel(estado,id){
+        try {
+            var conn = await connDB().promise()
+            var sql = "update instalaciones set estado = "+estado+" where id = "+id
+            await conn.query(sql)
+            await conn.end()
+            return {code :200,msm:"OK"}
+        }catch (e) {
+            return  {code:400,msm:e.toString()}
+        }
+    }
+
+
 }
 
 module.exports = InstallModel

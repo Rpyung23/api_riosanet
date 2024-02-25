@@ -3,6 +3,7 @@ const app = express()
 
 const {CheckToken} =require("../util/CheckToken")
 const InstallController = require("../controller/install.controller")
+const TransfersController = require("../controller/transfers.controller");
 
 app.get('/install_pen_all',async function(req,res)
 {
@@ -22,5 +23,22 @@ app.get('/install_pen_all',async function(req,res)
     }
 })
 
+
+app.put("/update_estado_install",CheckToken,async function(req,res)
+{
+    try {
+        var data = await InstallController.updateEstadoInstallController(req.body.estado,req.body.id)
+
+        res.status(200).json({
+            status_code : data.code,
+            msm:data.msm
+        })
+    }catch (e) {
+        res.status(200).json({
+            status_code : data.code,
+            msm: e.toString()
+        })
+    }
+})
 
 module.exports = app

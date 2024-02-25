@@ -76,6 +76,18 @@ class FailModel
            return {code:400,msm:e.toString()}
        }
    }
+
+    static async updateEstadoFailModel(estado,id){
+        try {
+            var conn = await connDB().promise()
+            var sql = "update fallos set estado = "+estado+" where id = "+id
+            await conn.query(sql)
+            await conn.end()
+            return {code :200,msm:"OK"}
+        }catch (e) {
+            return  {code:400,msm:e.toString()}
+        }
+    }
 }
 
 module.exports = FailModel

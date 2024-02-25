@@ -2,6 +2,7 @@ const express = require("express")
 const app = express()
 const FailController = require("../controller/fail.controller")
 const {CheckToken} =require("../util/CheckToken")
+
 app.get("/type_fail",async function(req,res)
 {
     try {
@@ -89,6 +90,24 @@ app.delete("/delete_fail",CheckToken,async function(req,res)
         res.status(200).json({
             status_code : 400,
             msm : e.toString()
+        })
+    }
+})
+
+
+app.put("/update_estado_fail",CheckToken,async function(req,res)
+{
+    try {
+        var data = await FailController.updateEstadoFailController(req.body.estado,req.body.id)
+
+        res.status(200).json({
+            status_code : data.code,
+            msm:data.msm
+        })
+    }catch (e) {
+        res.status(200).json({
+            status_code : data.code,
+            msm: e.toString()
         })
     }
 })

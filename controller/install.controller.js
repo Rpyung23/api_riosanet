@@ -5,6 +5,10 @@ class InstallController
     {
         return await InstallModel.readInstallPenAllModel()
     }
+
+    static async updateEstadoInstallController(estado,id){
+        return await InstallModel.updateEstadoInstallModel(estado,id)
+    }
 }
 
 module.exports = InstallController
