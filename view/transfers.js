@@ -99,6 +99,7 @@ app.put("/update_transfers",CheckToken,async function(req,res)
 
 app.put("/update_estado_transfers",CheckToken,async function(req,res)
 {
+    console.log(req.body)
     try {
         var data = await TransfersController.updateEstadoTransfersController(req.body.estado,req.body.id)
 
