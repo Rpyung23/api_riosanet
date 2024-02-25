@@ -8,7 +8,7 @@ class TransfersModel
             var sql = "select T.id,T.cedula,U.nombre,T.cel,T.dir,T.ref,T.lat_traspaso," +
                 "T.estado,T.lng_traspaso,T.id_tec,UT.nombre nombre_tecnico from traspasos as T " +
                 "left join usuarios as U on U.cedula = T.cedula left join users as UT on " +
-                "UT.id = T.id_tec where T.estado = 1 order by T.fecha_hora asc"
+                "UT.id = T.id_tec where T.estado != 3 order by T.fecha_hora asc"
             var data = await conn.query(sql)
             await conn.end()
             return data[0]
