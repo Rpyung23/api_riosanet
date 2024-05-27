@@ -10,7 +10,7 @@ class UserModel
                 "U.nombre,U.user from users as U where " +
                 "upper(U.estado) = upper('Habilitado')  " +
                 "and U.user = '"+user+"' and U.password = SHA2('"+pass+"',256)"
-            //console.log(sql)
+            console.log(sql)
             var data = await conn.query(sql)
             await conn.end()
             return data[0][0]

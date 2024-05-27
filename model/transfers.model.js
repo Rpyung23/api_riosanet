@@ -5,10 +5,10 @@ class TransfersModel
     {
         try {
             var conn = await connDB().promise()
-            var sql = "select T.id,T.cedula,U.nombre,T.cel,T.dir,T.ref,T.lat_traspaso," +
-                "T.estado,T.lng_traspaso,T.id_tec,UT.nombre nombre_tecnico from traspasos as T " +
-                "left join usuarios as U on U.cedula = T.cedula left join users as UT on " +
-                "UT.id = T.id_tec where T.estado != 3 order by T.fecha_hora asc"
+            var sql = "select T.id,T.cedula,C.nombre,T.cel,T.dir,T.ref,T.lat_traspaso,T.estado," +
+                "T.lng_traspaso,T.id_tec,UT.nombre nombre_tecnico from traspasos as T " +
+                "left join contratos as C on C.cedula = T.cedula left join users as UT on " +
+                "UT.id = T.id_tec where T.estado != 3 order by T.fecha_hora desc"
             var data = await conn.query(sql)
             await conn.end()
             return data[0]
@@ -21,10 +21,14 @@ class TransfersModel
     {
         try {
             var conn = await connDB().promise()
-            var sql = "select T.id,T.cedula,U.nombre,T.cel,T.dir,T.ref,T.lat_traspaso," +
+            var sql = "select T.id,T.cedula,C.nombre,T.cel,T.dir,T.ref,T.lat_traspaso,T.estado," +
+                "T.lng_traspaso,T.id_tec,UT.nombre nombre_tecnico from traspasos as T " +
+                "left join contratos as C on C.cedula = T.cedula left join users as UT on " +
+                "UT.id = T.id_tec where T.cedula = '"+cedula+"' order by T.fecha_hora desc"
+            /*var sql = "select T.id,T.cedula,U.nombre,T.cel,T.dir,T.ref,T.lat_traspaso," +
                 "T.estado,T.lng_traspaso,T.id_tec,UT.nombre nombre_tecnico from traspasos as T " +
                 "left join usuarios as U on U.cedula = T.cedula left join users as UT on " +
-                "UT.id = T.id_tec where T.cedula = '"+cedula+"' order by T.fecha_hora,T.estado asc"
+                "UT.id = T.id_tec where T.cedula = '"+cedula+"' order by T.fecha_hora,T.estado asc"*/
             var data = await conn.query(sql)
             await conn.end()
             return data[0]
