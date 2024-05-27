@@ -11,6 +11,7 @@ const transfers = require("./view/transfers")
 const fail = require("./view/fail")
 
 app.use(cors())
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
