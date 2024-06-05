@@ -62,13 +62,20 @@ app.get("/fail_all_client",CheckToken,async function(req,res)
 app.post("/create_fail",CheckToken,async function(req,res)
 {
     try {
-        var data = await FailController.insertFailClientController(req.body.cedula,
-            req.body.tarea,req.body.notas)
+        var cant = await FailController.readCantFailController(req.body.cedula)
 
-        res.status(200).json({
-            status_code : data.code,
-            msm : data.msm
-        })
+        if(cant  > 0){
+            var data = await FailController.insertFailClientController(req.body.cedula,
+                req.body.tarea,req.body.notas)
+        }
+
+        var json = {
+            status_code : cant > 0 ? 300 : data.code,
+            msm : cant > 0 ? 'Por favor, espere a que un técnico revise su fallo anterior' : data.msm
+        }
+        //console.log(json)
+
+            res.status(200).json(json)
     }catch (e) {
         res.status(200).json({
             status_code : 400,

@@ -12,7 +12,7 @@ app.post("/login_client",async function(req,res)
         var data = await ClientController.loginClientController(req.body.user,req.body.pass)
         res.status(200).json({
             status_code : data == null ? 300 : 200,
-            datos: data == null ? null : {nombre:data.nombre,avatar:data.avatar},
+            datos: data == null ? null : {nombre:data.nombre,avatar:data.avatar,firstLogin:data.firstLogin},
             token: data == null ? null : createToken(data.cedula,data.cedula),
             msm: data == null ? "CLIENTE NO ENCONTRADO" : "LOGIN "
         })

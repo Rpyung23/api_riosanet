@@ -1,6 +1,20 @@
 const connDB = require('../config/conn')
 class FailModel
 {
+    static async readCantFailModel(cedula){
+        try {
+            var conn = await connDB().promise()
+            var sql = "select count(*) as cantFail from fallos as F where F.estado = 1 and F.cedula = '"+cedula+"'"
+            var response = await conn.query(sql)
+            await conn.end()
+
+            return response[0][0].cantFail
+        }catch (e) {
+            console.log(e)
+            return  0
+        }
+    }
+
     static async readTypeFailModel()
     {
         try {

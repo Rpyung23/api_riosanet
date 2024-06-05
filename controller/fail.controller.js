@@ -1,6 +1,9 @@
 const FailModel = require('../model/fail.model')
 class FailController
 {
+    static async readCantFailController(cedula){
+        return await FailModel.readCantFailModel(cedula)
+    }
     static async readTypeFailController(){
         return await FailModel.readTypeFailModel()
     }
