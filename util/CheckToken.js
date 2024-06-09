@@ -9,6 +9,9 @@ module.exports = {
             req.query.token ||
             req.headers["x-access-token"] ||
             req.params.token;
+
+        //console.log(tokenApi)
+
         if (tokenApi) {
 
             jwt.verify(tokenApi, JWT_PASS_SECRET, (err, decoded) => {

@@ -19,6 +19,22 @@ class UserModel
             return null
         }
     }
+
+    static  async updatePasswordModel(cedula, pass)
+    {
+        try {
+            var conn = await connDB().promise()
+            var sql = "update users set firstLogin = 0,password = sha2('"+pass+"',256) where user = '"+cedula+"'"
+            console.log(sql)
+            await conn.query(sql)
+            await conn.end()
+            return true
+        }catch (e) {
+            console.log(e.toString())
+            return null
+        }
+    }
+
 }
 
 module.exports = UserModel

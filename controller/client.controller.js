@@ -10,6 +10,14 @@ class ClientController
     {
         return await ClientModel.loginClientModel(user,pass)
     }
+
+    static  async updatePasswordController(cedula, pass){
+        return await ClientModel.updatePasswordModel(cedula,pass)
+    }
+
+    static async updateProfileModel(nombre,correo,telefono,referencia,latitude,longitude,cedula){
+        return await ClientModel.updateProfileModel(nombre,correo,telefono,referencia,latitude,longitude,cedula)
+    }
 }
 
 module.exports = ClientController
