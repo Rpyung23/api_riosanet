@@ -19,7 +19,7 @@ class FailModel
     {
         try {
             var conn = await connDB().promise()
-            var sql = "select LS.id,LS.nombre from lista_fallos as LS"
+            var sql = "select LS.id,LS.nombre,LS.level from lista_fallos as LS"
             var data = await conn.query(sql)
             await conn.end()
             return data[0]
@@ -37,11 +37,12 @@ class FailModel
                 "UT.nombre nombre_tecnico,U.movil,U.nombre,U.direccion,U.lat_usuario," +
                 "U.lng_usuario from fallos as F left join users as UT on UT.id = F.id_tec " +
                 "left join usuarios as U on U.cedula = F.cedula where F.estado = 1"*/
-            var sql = "select F.id,F.cedula,F.tarea,F.notas nota_fallo,F.id_tec," +
+            var sql = "select LF.level,F.id,F.cedula,F.tarea,F.notas nota_fallo,F.id_tec," +
                 "UT.nombre nombre_tecnico,C.telefono movil,C.nombre,C.direccion,C.latitude lat_usuario," +
                 "C.longitude lng_usuario from fallos as F left join users as UT on UT.id = F.id_tec " +
-                "left join contratos as C on C.cedula = F.cedula where F.estado = 1"
-            //console.log(sql)
+                "left join contratos as C on C.cedula = F.cedula left join lista_fallos LF on TRIM(LF.nombre) = TRIM(F.tarea) " +
+                "where F.estado = 1 and !ISNULL(LF.level);"
+            console.log(sql)
             var data = await conn.query(sql)
             await conn.end()
             return data[0]
