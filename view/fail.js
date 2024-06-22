@@ -64,8 +64,8 @@ app.post("/create_fail",CheckToken,async function(req,res)
     try {
         var cant = await FailController.readCantFailController(req.body.cedula)
 
-        if(cant  > 0){
-            var data = await FailController.insertFailClientController(req.body.cedula,
+        if(cant <= 1){
+            var data =  await FailController.insertFailClientController(req.body.cedula,
                 req.body.tarea,req.body.notas)
         }
 
@@ -77,6 +77,7 @@ app.post("/create_fail",CheckToken,async function(req,res)
 
             res.status(200).json(json)
     }catch (e) {
+        console.log(e)
         res.status(200).json({
             status_code : 400,
             msm : e.toString()
@@ -104,8 +105,10 @@ app.delete("/delete_fail",CheckToken,async function(req,res)
 
 app.put("/update_estado_fail",CheckToken,async function(req,res)
 {
+    console.log(req.body)
     try {
-        var data = await FailController.updateEstadoFailController(req.body.estado,req.body._id)
+        var data = await FailController.updateEstadoFailController(req.body.estado,
+            req.body.nota,req.body.evidencia_url,req.body.url_firma,req.body.id_fail)
 
         res.status(200).json({
             status_code : data.code,

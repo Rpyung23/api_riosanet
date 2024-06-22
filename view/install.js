@@ -27,7 +27,8 @@ app.get('/install_pen_all',async function(req,res)
 app.put("/update_estado_install",CheckToken,async function(req,res)
 {
     try {
-        var data = await InstallController.updateEstadoInstallController(req.body.estado,req.body._id)
+        var data = await InstallController.updateEstadoInstallController(req.body.estado,req.body.url_img,
+            req.body.notas,req.body.id_install)
 
         res.status(200).json({
             status_code : data.code,

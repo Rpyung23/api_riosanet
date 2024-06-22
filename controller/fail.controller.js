@@ -25,8 +25,8 @@ class FailController
         return await FailModel.deleteFailClientModel(id_fail)
     }
 
-    static async updateEstadoFailController(estado,id){
-        return await FailModel.updateEstadoFailModel(estado,id)
+    static async updateEstadoFailController(estado,nota,evidencia_url,url_firma,id){
+        return await FailModel.updateEstadoFailModel(estado,nota,evidencia_url,url_firma,id)
     }
 }
 

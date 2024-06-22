@@ -37,11 +37,11 @@ class FailModel
                 "UT.nombre nombre_tecnico,U.movil,U.nombre,U.direccion,U.lat_usuario," +
                 "U.lng_usuario from fallos as F left join users as UT on UT.id = F.id_tec " +
                 "left join usuarios as U on U.cedula = F.cedula where F.estado = 1"*/
-            var sql = "select LF.level,F.id,F.cedula,F.tarea,F.notas nota_fallo,F.id_tec," +
+            var sql = "select F.estado,LF.level,F.id,F.cedula,F.tarea,F.notas nota_fallo,F.id_tec," +
                 "UT.nombre nombre_tecnico,C.telefono movil,C.nombre,C.direccion,C.latitude lat_usuario," +
                 "C.longitude lng_usuario from fallos as F left join users as UT on UT.id = F.id_tec " +
                 "left join contratos as C on C.cedula = F.cedula left join lista_fallos LF on TRIM(LF.nombre) = TRIM(F.tarea) " +
-                "where F.estado = 1 and !ISNULL(LF.level);"
+                "where F.estado in (1,2) and !ISNULL(LF.level);"
             console.log(sql)
             var data = await conn.query(sql)
             await conn.end()
@@ -78,15 +78,16 @@ class FailModel
    static async insertFailClientModel(cedula,tarea,notas)
    {
        try {
-           var conn = connDB().promise()
+           var conn = await connDB().promise()
            var sql = "insert into fallos(agencia, name, dir, estado, ciudad, tarea, cel, ref, " +
-               "fecha, id_tec, cedula,fecha_hora, fecha_com, fecha_hora_com, notas) VALUES " +
-               "(0,'','',1,'GUARANDA','"+tarea+"','','',date(now()),46,'"+cedula+"',now(),'0000-00-00','0000-00-00 00:00:00','"+notas+"')"
-
+               "fecha, cedula,fecha_hora, fecha_com, fecha_hora_com, notas) VALUES " +
+               "(0,'','',1,'GUARANDA','"+tarea+"','','',date(now()),'"+cedula+"',now(),'0000-00-00','0000-00-00 00:00:00','"+notas+"')"
+           console.log(sql)
            await conn.query(sql)
            await conn.end()
            return {code:200,msm:'FALLO CREADO CON EXITO'}
        }catch (e) {
+           console.log(e)
            return {code:400,msm:e.toString()}
        }
    }
@@ -104,10 +105,11 @@ class FailModel
        }
    }
 
-    static async updateEstadoFailModel(estado,id){
+    static async updateEstadoFailModel(estado,nota,evidencia_url,url_firma,id){
         try {
             var conn = await connDB().promise()
-            var sql = "update fallos set estado = "+estado+" where id = "+id
+            var sql = "update fallos set estado = "+estado+",notas='"+nota+"',evidencia_url='"+evidencia_url+"',url_firma = '"+url_firma+"' where id = "+id
+            console.log(sql)
             await conn.query(sql)
             await conn.end()
             return {code :200,msm:"OK"}
