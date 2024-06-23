@@ -6,7 +6,7 @@ const {CheckToken} = require("../util/CheckToken");
 app.post('/login_user',async function(req,res)
 {
     try {
-        var data = await UserController.loginUserController(req.body.user,req.body.pass)
+        var data = await UserController.loginUserController(req.body.user,req.body.pass,req.body.fcm)
         res.status(200).json({
             status_code : data == null ? 300 : 200,
             datos: data == null ? null : {avatar:data.avatar,nombre:data.nombre,firstLogin:data.firstLogin},

@@ -108,7 +108,7 @@ app.put("/update_estado_fail",CheckToken,async function(req,res)
     console.log(req.body)
     try {
         var data = await FailController.updateEstadoFailController(req.body.estado,
-            req.body.nota,req.body.evidencia_url,req.body.url_firma,req.body.id_fail)
+            req.body.nota,req.body.evidencia_url,req.body.url_firma,req.body.id_fail,req.body.fcm)
 
         res.status(200).json({
             status_code : data.code,

@@ -18,7 +18,7 @@ class ClientModel
         }
     }
 
-    static async loginClientModel(user,pass)
+    static async loginClientModel(user,pass,fcm)
     {
         try {
             var conn = await connDB().promise()
@@ -28,6 +28,10 @@ class ClientModel
                              "and U.pass = SHA2('"+pass+"',256) and estado = 1"*/
             console.log(sql)
             var data = await conn.query(sql)
+            console.log(data[0])
+            if(data[0].length > 0) {
+                await conn.query("update contratos set fcm = '"+fcm+"' where cedula = '"+user+"'")
+            }
             await conn.end()
             return data[0][0]
         }catch (e) {

@@ -1,7 +1,7 @@
 const connDB = require('../config/conn')
 class UserModel
 {
-    static async loginUserModel(user,pass)
+    static async loginUserModel(user,pass,fcm)
     {
         try {
             var conn = (await connDB()).promise();
@@ -12,6 +12,11 @@ class UserModel
                 "and U.user = '"+user+"' and U.password = SHA2('"+pass+"',256)"
             console.log(sql)
             var data = await conn.query(sql)
+
+            if(data[0].length > 0) {
+                await conn.query("update users set fcm = '"+fcm+"' where user = '"+user+"'")
+            }
+
             await conn.end()
             return data[0][0]
         }catch (e) {

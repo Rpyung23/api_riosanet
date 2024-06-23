@@ -6,9 +6,9 @@ class ClientController
         return await ClientModel.readProfileClientModel(id,cedula)
     }
 
-    static async loginClientController(user,pass)
+    static async loginClientController(user,pass,fcm)
     {
-        return await ClientModel.loginClientModel(user,pass)
+        return await ClientModel.loginClientModel(user,pass,fcm)
     }
 
     static  async updatePasswordController(cedula, pass){

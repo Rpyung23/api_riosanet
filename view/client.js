@@ -9,7 +9,7 @@ app.post("/login_client",async function(req,res)
 
 
     try {
-        var data = await ClientController.loginClientController(req.body.user,req.body.pass)
+        var data = await ClientController.loginClientController(req.body.user,req.body.pass,req.body.fcm)
         res.status(200).json({
             status_code : data == null ? 300 : 200,
             datos: data == null ? null : {nombre:data.nombre,avatar:data.avatar,firstLogin:data.firstLogin},

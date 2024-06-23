@@ -1,4 +1,5 @@
 const connDB = require('../config/conn')
+const NotificationPush = require('../service/NotificationPush')
 class FailModel
 {
     static async readCantFailModel(cedula){
@@ -37,7 +38,7 @@ class FailModel
                 "UT.nombre nombre_tecnico,U.movil,U.nombre,U.direccion,U.lat_usuario," +
                 "U.lng_usuario from fallos as F left join users as UT on UT.id = F.id_tec " +
                 "left join usuarios as U on U.cedula = F.cedula where F.estado = 1"*/
-            var sql = "select F.estado,LF.level,F.id,F.cedula,F.tarea,F.notas nota_fallo,F.id_tec," +
+            var sql = "select C.fcm,F.estado,LF.level,F.id,F.cedula,F.tarea,F.notas nota_fallo,F.id_tec," +
                 "UT.nombre nombre_tecnico,C.telefono movil,C.nombre,C.direccion,C.latitude lat_usuario," +
                 "C.longitude lng_usuario from fallos as F left join users as UT on UT.id = F.id_tec " +
                 "left join contratos as C on C.cedula = F.cedula left join lista_fallos LF on TRIM(LF.nombre) = TRIM(F.tarea) " +
@@ -105,13 +106,17 @@ class FailModel
        }
    }
 
-    static async updateEstadoFailModel(estado,nota,evidencia_url,url_firma,id){
+    static async updateEstadoFailModel(estado,nota,evidencia_url,url_firma,id,fcm)
+    {
         try {
             var conn = await connDB().promise()
             var sql = "update fallos set estado = "+estado+",notas='"+nota+"',evidencia_url='"+evidencia_url+"',url_firma = '"+url_firma+"' where id = "+id
             console.log(sql)
             await conn.query(sql)
             await conn.end()
+            if(fcm != null && fcm != ""){
+                NotificationPush.sentNotificationPush(fcm,'Eestimado(a) usuario, RIOSANET le comunica',`Su fallo se encuentra ${estado == 2 ? "EN PROCESO." : "FINALIZADO con éxito."}`)
+            }
             return {code :200,msm:"OK"}
         }catch (e) {
             return  {code:400,msm:e.toString()}
