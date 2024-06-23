@@ -101,7 +101,8 @@ app.put("/update_estado_transfers",CheckToken,async function(req,res)
 {
     console.log(req.body)
     try {
-        var data = await TransfersController.updateEstadoTransfersController(req.body.estado,req.body._id)
+        var data = await TransfersController.updateEstadoTransfersController(req.body.estado,req.body.anotaciones,
+            req.body.img_evidencia,req.body.img_firma,req.body.id_traspaso)
 
         res.status(200).json({
             status_code : data.code,

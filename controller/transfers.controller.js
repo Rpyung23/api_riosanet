@@ -22,8 +22,8 @@ class TransfersController
         return await TransfersModel.updateTransfersModel(cel,dir,ref,lat_traspaso,lng_traspaso, id_traspaso)
     }
 
-    static async updateEstadoTransfersController(estado,id){
-        return await TransfersModel.updateEstadoTransfersModel(estado,id)
+    static async updateEstadoTransfersController(estado,anotaciones ,img_evidencia ,img_firma,id_traspaso){
+        return await TransfersModel.updateEstadoTransfersModel(estado,anotaciones ,img_evidencia ,img_firma,id_traspaso)
     }
 }
 

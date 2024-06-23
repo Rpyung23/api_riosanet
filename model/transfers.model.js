@@ -5,7 +5,8 @@ class TransfersModel
     {
         try {
             var conn = await connDB().promise()
-            var sql = "select T.id,T.cedula,C.nombre,T.cel,T.dir,T.ref,T.lat_traspaso,T.estado," +
+            var sql = "select T.anotaciones,T.img_evidencia,T.img_firma," +
+                "T.id,T.cedula,C.nombre,T.cel,T.dir,T.ref,T.lat_traspaso,T.estado," +
                 "T.lng_traspaso,T.id_tec,UT.nombre nombre_tecnico from traspasos as T " +
                 "left join contratos as C on C.cedula = T.cedula left join users as UT on " +
                 "UT.id = T.id_tec where T.estado in (1,2) order by T.fecha_hora desc"
@@ -17,6 +18,7 @@ class TransfersModel
             return []
         }
     }
+
     static async readTransfersPenClientAllModel(cedula)
     {
         try {
@@ -85,10 +87,12 @@ class TransfersModel
         }
     }
 
-    static async updateEstadoTransfersModel(estado,id){
+    static async updateEstadoTransfersModel(estado,anotaciones ,img_evidencia ,img_firma,id_traspaso){
         try {
             var conn = await connDB().promise()
-            var sql = `update traspasos set estado = ${estado} where id = ${id}`
+            var sql = "update traspasos set estado = "+estado+",anotaciones = '"+anotaciones+"',img_evidencia = '"+img_evidencia+"'," +
+                "img_firma = '"+img_firma+"' where id = "+id_traspaso
+            //var sql = `update traspasos set estado = ${estado} where id = ${id}`
             console.log(sql)
             await conn.query(sql)
             await conn.end()
