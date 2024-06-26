@@ -28,7 +28,7 @@ app.put("/update_estado_install",CheckToken,async function(req,res)
 {
     try {
         var data = await InstallController.updateEstadoInstallController(req.body.estado,req.body.url_img,
-            req.body.notas,req.body.id_install)
+            req.body.notas,req.body.id_install,req.body.url_firma)
 
         res.status(200).json({
             status_code : data.code,

@@ -18,10 +18,10 @@ class InstallModel
         }
     }
 
-    static async updateEstadoInstallModel(estado,url_img,notas,id){
+    static async updateEstadoInstallModel(estado,url_img,notas,id,url_firma){
         try {
             var conn = await connDB().promise()
-            var sql = "update instalaciones set estado = "+estado+",img_install = '"+url_img+"',notas = '"+notas+"' where id = "+id
+            var sql = "update instalaciones set estado = "+estado+",img_install = '"+url_img+"',notas = '"+notas+"',url_firma='"+url_firma+"' where id = "+id
             console.log(sql)
             await conn.query(sql)
             await conn.end()

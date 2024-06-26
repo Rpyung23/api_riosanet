@@ -6,8 +6,8 @@ class InstallController
         return await InstallModel.readInstallPenAllModel()
     }
 
-    static async updateEstadoInstallController(estado,url_img,notas,id){
-        return await InstallModel.updateEstadoInstallModel(estado,url_img,notas,id)
+    static async updateEstadoInstallController(estado,url_img,notas,id,url_firma){
+        return await InstallModel.updateEstadoInstallModel(estado,url_img,notas,id,url_firma)
     }
 }
 
